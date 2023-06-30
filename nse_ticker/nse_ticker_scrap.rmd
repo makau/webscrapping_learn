@@ -1,0 +1,46 @@
+---
+title: "R Notebook"
+output: html_document
+---
+```{r}
+
+library(RSelenium)
+library(tidyverse)
+library(rvest)
+
+driver <- rsDriver(browser = "firefox")
+
+remDr <- driver[["client"]]
+
+remDr$navigate("https://www.nse.co.ke/")
+
+remDr$findElement(using = "xpath", value = '//*[@id="ticker"]')$sendKeysToElement(list("SCOM"))
+
+data <- remDr$getPageSource() %>%
+  .[[1]] %>%
+  read_html() %>%
+  html_nodes(".table") %>%
+  html_table()
+
+head(data[[1]])
+
+
+innerText <- remote_driver$findElement(using = "css selector", "#thrnseappend")$getElementText()
+
+innerText
+
+remDr$close()
+```
+
+```{r}
+library(RSelenium)
+driver <- rsDriver(browser = "firefox")
+remote_driver <- driver[["client"]]
+remote_driver$navigate("https://www.nse.co.ke/")
+
+innerText <- remote_driver$findElement(using = "css selector", "#thrnseappend")$getElementText()
+
+innerText
+```
+
+
